@@ -10,6 +10,14 @@
 
   <name>rms_matching_service</name>
 
+  <repositories>
+    <repository>
+      <id>local-maven-repo</id>
+      <name>local-maven-repo</name>
+      <url>/local-maven-repo</url>
+    </repository>
+  </repositories>
+
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,6 +37,18 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.13</version>
     </dependency>
+    <dependency>
+      <groupId>it.sauronsoftware</groupId>
+      <artifactId>it.sauronsoftware.jave</artifactId>
+      <version>1.0.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.googlecode.soundlibs/tritonus-all -->
+    <dependency>
+      <groupId>com.googlecode.soundlibs</groupId>
+      <artifactId>tritonus-all</artifactId>
+      <version>0.3.7.2</version>
+    </dependency>
+
   </dependencies>
 
   <build>
