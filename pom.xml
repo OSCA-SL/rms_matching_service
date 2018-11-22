@@ -12,9 +12,8 @@
 
   <repositories>
     <repository>
-      <id>local-maven-repo</id>
-      <name>local-maven-repo</name>
-      <url>file://./local-maven-repo</url>
+      <id>project-repo</id>
+      <url>file://${project.basedir}/local-maven-repo</url>
     </repository>
   </repositories>
 
@@ -39,7 +38,7 @@
     </dependency>
     <dependency>
       <groupId>it.sauronsoftware</groupId>
-      <artifactId>it.sauronsoftware.jave</artifactId>
+      <artifactId>jave</artifactId>
       <version>1.0.2</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.googlecode.soundlibs/tritonus-all -->
