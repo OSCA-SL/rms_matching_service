@@ -24,7 +24,6 @@ public class FileUtil {
         encoAttrs.setAudioAttributes(audioAttr);
         try{
             encoder.encode(source, target, encoAttrs);
-            System.out.println(target.getCanonicalPath());
         }catch(Exception e){
             System.out.println("Mp3 to wav converting failed! "+e.getMessage());
             return false;

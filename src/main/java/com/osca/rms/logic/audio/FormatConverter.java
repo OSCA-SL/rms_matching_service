@@ -27,8 +27,7 @@ public class FormatConverter {
             PCM2PCMConversionProvider conversionProvider = new PCM2PCMConversionProvider();
             AudioInputStream in = AudioSystem.getAudioInputStream(file);
             AudioFormat baseFormat = in.getFormat();
-            System.out.println();
-            System.out.println("Base Format : " + baseFormat.toString());
+
 
             AudioFormat decodedFormat = new AudioFormat(
                     AudioFormat.Encoding.PCM_SIGNED,
@@ -38,7 +37,7 @@ public class FormatConverter {
 
             din = AudioSystem.getAudioInputStream(decodedFormat, in);
 
-            System.out.println("Decorded Format : " + decodedFormat.toString());
+
 
             AudioFormat format2 = getFormat2(baseFormat);
             outDin = AudioSystem.getAudioInputStream(format2, din);

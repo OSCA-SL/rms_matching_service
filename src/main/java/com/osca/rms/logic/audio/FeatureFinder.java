@@ -21,7 +21,7 @@ public class FeatureFinder {
     public Map<Long, List<Integer>> extractFeaturesNew(AudioInputStream in, int silde, int shiftWin, boolean isRegister)
     {
         long timeMills = System.currentTimeMillis();
-        System.out.println("ExtractFeatures started!");
+
         Map<Long, List<Integer>>  retMap = new HashMap<Long, List<Integer>>();
 
 
@@ -179,7 +179,7 @@ public class FeatureFinder {
             retMap = new HashMap<Long, List<Integer>>();
         }
 
-        System.out.println("ExtractFeatures completed within "+ (System.currentTimeMillis() - timeMills) +" Ms" );
+
         return retMap;
     }
 
