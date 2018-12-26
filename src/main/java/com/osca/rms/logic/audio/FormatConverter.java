@@ -14,15 +14,13 @@ public class FormatConverter {
 
     public static final int RESAPLE_RATE = 8000;
 
-    public List<AudioInputStream> convertFormat(File file) {
-
-        List<AudioInputStream> streams = new ArrayList<AudioInputStream>();
+    public AudioInputStream convertFormat(File file) {
+        AudioInputStream din = null;
+        AudioInputStream outDin = null;
+        AudioInputStream outDin2 = null;
         try {
-            AudioInputStream din = null;
-            AudioInputStream outDin = null;
-            AudioInputStream outDin2 = null;
             if (file == null) {
-                return streams;
+                return outDin2;
             }
             PCM2PCMConversionProvider conversionProvider = new PCM2PCMConversionProvider();
             AudioInputStream in = AudioSystem.getAudioInputStream(file);
@@ -38,20 +36,42 @@ public class FormatConverter {
             din = AudioSystem.getAudioInputStream(decodedFormat, in);
 
 
+            AudioFormat format2 = getFormat2(baseFormat);
+            outDin = AudioSystem.getAudioInputStream(format2, din);
+            outDin2 = AudioSystem.getAudioInputStream(getFormat3(format2), outDin);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return outDin2;
+    }
+
+    public AudioInputStream convertFormat(AudioInputStream in) {
+
+        AudioInputStream din = null;
+        AudioInputStream outDin = null;
+        AudioInputStream outDin2 = null;
+        try {
+            AudioFormat baseFormat = in.getFormat();
+            AudioFormat decodedFormat = new AudioFormat(
+                    AudioFormat.Encoding.PCM_SIGNED,
+                    baseFormat.getSampleRate(), 16, baseFormat.getChannels(),
+                    baseFormat.getChannels() * 2, baseFormat.getSampleRate(),
+                    false);
+
+            din = AudioSystem.getAudioInputStream(decodedFormat, in);
+
 
             AudioFormat format2 = getFormat2(baseFormat);
             outDin = AudioSystem.getAudioInputStream(format2, din);
             outDin2 = AudioSystem.getAudioInputStream(getFormat3(format2), outDin);
 
-            streams.add(outDin2);
-            streams.add(din);
-            streams.add(in);
+
         } catch (Exception e) {
-            streams = new ArrayList<AudioInputStream>();
             e.printStackTrace();
         }
-        return streams;
+        return outDin2;
     }
+
 
     private AudioFormat getFormat() {
         float sampleRate = 11025;//44100;

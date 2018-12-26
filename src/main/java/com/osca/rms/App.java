@@ -15,8 +15,8 @@ public class App {
         File file = new File(args[0]);
         FileUtil.mp3ToWav(file.getAbsolutePath(), "./temp/test");
         FormatConverter newConverter = new FormatConverter();
-        List<AudioInputStream> convertFormat = newConverter.convertFormat(new File("./temp/test.wav"));
-        Map<Long, List<Integer>> hashMap = new FeatureFinder().extractFeaturesNew(convertFormat.get(0), 0, FeatureFinder.FFT_SHIFT_WIN_SIZE, true);
+        AudioInputStream convertFormat = newConverter.convertFormat(new File("./temp/test.wav"));
+        Map<Long, List<Integer>> hashMap = new FeatureFinder().extractFeaturesNew(convertFormat, 0, FeatureFinder.FFT_SHIFT_WIN_SIZE, true);
         System.out.println(hashMap.toString());
         new File("./temp/test.wav").delete();
         System.out.println(new Gson().toJson(hashMap));
