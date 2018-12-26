@@ -7,6 +7,8 @@ import it.sauronsoftware.jave.EncodingAttributes;
 import java.io.File;
 
 public class FileUtil {
+    public static final int FRAME_SIZE_IN_SECOND = 40;
+
     public static boolean mp3ToWav(String mp3File,String targetPath){
 
         Encoder encoder = new Encoder();

@@ -4,8 +4,26 @@ import java.sql.*;
 
 public class DatabaseUtil {
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", "");
+    public static Connection getConnection()
+    {
+        Connection conn = null;
+        try
+        {
+
+            String url = "jdbc:mysql://localhost/osca_rms";
+            String USER = "root";
+            String PASS = "12345";
+            conn = DriverManager.getConnection(url, USER, PASS);
+            if( conn != null && !conn.isClosed() )
+            {
+                return conn;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return conn;
     }
 
     public static int execute(String query,Connection conn)
@@ -55,10 +73,6 @@ public class DatabaseUtil {
             rs = stmt.executeQuery(query);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally
-        {
-            close(stmt);
         }
         return rs;
     }
