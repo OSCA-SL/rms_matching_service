@@ -29,7 +29,9 @@ public class MatchingServer extends HttpServlet {
         String request = bufferedReader.readLine();
         MatchingRequestBean requestBean = new Gson().fromJson(request, MatchingRequestBean.class);
         ExecutorService executorService = Executors.newFixedThreadPool(requestBean.getChannels().size());
+        long stTime = System.currentTimeMillis();
         MatchChannels(executorService,requestBean);
+        System.out.println("Matching took "+(System.currentTimeMillis() - stTime)/1000+" S");
         executorService.shutdown();
     }
 

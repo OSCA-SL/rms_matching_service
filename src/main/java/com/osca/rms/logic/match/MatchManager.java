@@ -53,7 +53,7 @@ public class MatchManager implements Runnable{
                     {
                         AudioInputStream ais = new AudioInputStream(new ByteArrayInputStream(dataArray), baseFormat, (long) (baseFormat.getSampleRate() * actualSampleLength));
                         FrameBean frameBean = new FrameBean(ais,new Timestamp(cal.getTime().getTime()),channelId);
-                        new Thread(new Matching(frameBean,sqlConnection)).start();
+                        new Matching(frameBean,sqlConnection).run();
                     }
                     cal.add(Calendar.SECOND, (int) actualSampleLength);
                 }

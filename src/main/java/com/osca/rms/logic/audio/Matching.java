@@ -26,13 +26,13 @@ public class Matching implements Runnable {
         long stTime = 0;
         Map<Long, Set<Integer>> allHashMap = new HashMap<>();
         try {
-            stTime = System.currentTimeMillis();
+
             Statement stmt = null;
             ResultSet rs = null;
             int bestCount = 0;
             int bestSong = -1;
             try {
-                long frameTime = System.currentTimeMillis();
+
                 for(int slide = 0 ; slide <= 1024 ; slide += 256)
                 {
                     AudioInputStream convertFormat = null;
@@ -72,9 +72,8 @@ public class Matching implements Runnable {
                     }
                 }
 
-                System.out.println("Feature extraction and saving took "+(System.currentTimeMillis() - stTime)/1000+" S");
                 Map<Long, List<songHash> > persistedHashMap = new HashMap<Long, List<songHash>>();
-                stTime = System.currentTimeMillis();
+
 
                 try {
                     StringBuilder squerStr = new StringBuilder("SELECT HV.* from fingerprint_hash_value HV where HV.hash_key in (");
@@ -112,8 +111,7 @@ public class Matching implements Runnable {
                     DatabaseUtil.close(rs);
                 }
 
-                System.out.println("Join table took "+(System.currentTimeMillis() - stTime)/1000+" S");
-                stTime = System.currentTimeMillis();
+
                 Map<Integer,Map<Integer,Integer>> matchMap= new HashMap<Integer,Map<Integer,Integer>>();
                 for(Long hash : allHashMap.keySet())
                 {
@@ -155,11 +153,7 @@ public class Matching implements Runnable {
                         }
                     }
                 }
-                System.out.println("Best count of frame = "+bestCount);
-                System.out.println("Best song of frame = "+bestSong);
 
-                System.out.println("Finding best score took "+(System.currentTimeMillis() - stTime)+" Ms");
-                stTime = System.currentTimeMillis();
 
 
                 Statement stmtStat = null;
