@@ -15,9 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MatchManager implements Runnable{
@@ -34,7 +31,6 @@ public class MatchManager implements Runnable{
     @Override
     public void run() {
         Connection sqlConnection = DatabaseUtil.getConnection();
-        System.out.println("dfgdfgdfgdfgd");
         try {
             AudioInputStream in = AudioSystem.getAudioInputStream(mediaFile);
             AudioFormat baseFormat = in.getFormat();
@@ -68,12 +64,5 @@ public class MatchManager implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(String.valueOf(System.currentTimeMillis()));
-        MatchManager matchManager = new MatchManager(new File("temp/test.wav"),Timestamp.valueOf(LocalDateTime.now()),1);
-        new Thread(matchManager).start();
-
     }
 }
