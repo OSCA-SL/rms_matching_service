@@ -35,7 +35,7 @@ public class MatchingServer extends HttpServlet {
 
     private void MatchChannels(ExecutorService executorService, MatchingRequestBean requestBean) {
         for (int i:requestBean.getChannels()) {
-            File mediaFile = new File(requestBean.getFolderpath()+"/"+"test"+".wav");
+            File mediaFile = new File(requestBean.getFolderpath()+"/"+i+".wav");
             Timestamp timestamp = Timestamp.valueOf(requestBean.getTimestamp());
             MatchManager manager = new MatchManager(mediaFile,timestamp,i);
             executorService.execute(manager);
