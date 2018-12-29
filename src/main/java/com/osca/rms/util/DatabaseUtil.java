@@ -9,7 +9,7 @@ public class DatabaseUtil {
         Connection conn = null;
         try
         {
-
+            Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost/osca_rms";
             String USER = "root";
             String PASS = "12345";
@@ -20,7 +20,7 @@ public class DatabaseUtil {
             }
 
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return conn;
