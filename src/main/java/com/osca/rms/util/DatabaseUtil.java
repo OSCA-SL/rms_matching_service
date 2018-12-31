@@ -12,7 +12,7 @@ public class DatabaseUtil {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost/osca_rms";
             String USER = "root";
-            String PASS = "12345";
+            String PASS = "";
             conn = DriverManager.getConnection(url, USER, PASS);
             if( conn != null && !conn.isClosed() )
             {

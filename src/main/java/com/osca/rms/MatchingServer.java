@@ -31,13 +31,15 @@ public class MatchingServer extends HttpServlet {
         ExecutorService executorService = Executors.newFixedThreadPool(requestBean.getChannels().size());
         long stTime = System.currentTimeMillis();
         MatchChannels(executorService,requestBean);
-        System.out.println("Matching took "+(System.currentTimeMillis() - stTime)/1000+" S");
         executorService.shutdown();
+        while (!executorService.isTerminated()){}
+        System.out.println("Matching took "+(System.currentTimeMillis() - stTime)/1000+" S");
     }
 
     private void MatchChannels(ExecutorService executorService, MatchingRequestBean requestBean) {
         for (int i:requestBean.getChannels()) {
             File mediaFile = new File(requestBean.getFolderpath()+"/"+i+".wav");
+            System.out.println("Processing File : "+mediaFile.getAbsolutePath()+" started");
             Timestamp timestamp = Timestamp.valueOf(requestBean.getTimestamp());
             MatchManager manager = new MatchManager(mediaFile,timestamp,i);
             executorService.execute(manager);
