@@ -26,7 +26,7 @@ public class MatchManager implements Runnable{
         this.mediaFile = mediaFile;
         this.dateTime = dateTime;
         this.channelId = channelId;
-        System.out.println(mediaFile.getAbsolutePath());
+
     }
     @Override
     public void run() {
