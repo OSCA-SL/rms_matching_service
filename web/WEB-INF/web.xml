@@ -4,13 +4,28 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <servlet>
-        <servlet-name>MatchingServer</servlet-name>
-        <servlet-class>com.osca.rms.MatchingServer</servlet-class>
+        <servlet-name>MatchingService</servlet-name>
+        <servlet-class>com.osca.rms.MatchingService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportingService</servlet-name>
+        <servlet-class>com.osca.rms.ReportingService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisteringService</servlet-name>
+        <servlet-class>com.osca.rms.RegisteringService</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>MatchingServer</servlet-name>
+        <servlet-name>MatchingService</servlet-name>
         <url-pattern>/match</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>ReportingService</servlet-name>
+        <url-pattern>/report</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisteringService</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
 
 </web-app>

@@ -162,7 +162,7 @@ public class Matching implements Runnable {
                 e.printStackTrace();
             }
 
-            if( bestSong > 0 )
+            if( bestSong > 0 && bestCount>=18)
             {
                 int state = DatabaseUtil.execute("INSERT into frame_match values ('"+frameBean.getChannelId()+"','"+frameBean.getDateTime().toString()+"','"+bestSong+"','"+bestCount+"')",sqlConnection);
             }

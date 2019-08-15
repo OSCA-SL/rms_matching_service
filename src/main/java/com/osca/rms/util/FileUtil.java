@@ -20,7 +20,7 @@ public class FileUtil {
         encoAttrs.setFormat(wavFormat);
 
         File source = new File(mp3File);
-        File target = new File(targetPath+".wav");
+        File target = new File(targetPath);
 
         audioAttr.setCodec("pcm_s16le");
         encoAttrs.setAudioAttributes(audioAttr);
