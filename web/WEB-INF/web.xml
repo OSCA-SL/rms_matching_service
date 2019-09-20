@@ -7,10 +7,7 @@
         <servlet-name>MatchingService</servlet-name>
         <servlet-class>com.osca.rms.MatchingService</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>ReportingService</servlet-name>
-        <servlet-class>com.osca.rms.ReportingService</servlet-class>
-    </servlet>
+
     <servlet>
         <servlet-name>RegisteringService</servlet-name>
         <servlet-class>com.osca.rms.RegisteringService</servlet-class>
@@ -18,10 +15,6 @@
     <servlet-mapping>
         <servlet-name>MatchingService</servlet-name>
         <url-pattern>/match</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ReportingService</servlet-name>
-        <url-pattern>/report</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RegisteringService</servlet-name>

@@ -3,10 +3,13 @@ package com.osca.rms.util;
 import it.sauronsoftware.jave.AudioAttributes;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncodingAttributes;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
 public class FileUtil {
+    private static final Logger logger = LogManager.getLogger(FileUtil.class);
     public static final int FRAME_SIZE_IN_SECOND = 40;
 
     public static boolean mp3ToWav(String mp3File,String targetPath){
@@ -27,7 +30,7 @@ public class FileUtil {
         try{
             encoder.encode(source, target, encoAttrs);
         }catch(Exception e){
-            System.out.println("Mp3 to wav converting failed! "+e.getMessage());
+            logger.error("MP3 to WAV conversion failed : "+e.toString());
             return false;
         }
         return true;

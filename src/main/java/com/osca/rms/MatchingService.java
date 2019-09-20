@@ -3,7 +3,6 @@ package com.osca.rms;
 import com.google.gson.Gson;
 import com.osca.rms.bean.MatchingRequestBean;
 import com.osca.rms.logic.match.MatchManager;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
