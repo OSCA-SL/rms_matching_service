@@ -7,6 +7,8 @@ import com.osca.rms.logic.audio.FormatConverter;
 import com.osca.rms.util.DatabaseUtil;
 import com.osca.rms.util.FileUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +20,6 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class RegisteringService extends HttpServlet {
 

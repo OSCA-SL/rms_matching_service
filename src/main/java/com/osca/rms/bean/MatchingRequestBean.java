@@ -1,33 +1,26 @@
 package com.osca.rms.bean;
 
+
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MatchingRequestBean {
-    private String folderpath;
-    private String timestamp;
-    private ArrayList<Integer> channels;
+    private String folder_path;
+    private Map<Integer, ArrayList<ClipBean>> channels;
 
-    public String getFolderpath() {
-        return folderpath;
+    public String getFolder_path() {
+        return folder_path;
     }
 
-    public void setFolderpath(String folderpath) {
-        this.folderpath = folderpath;
+    public void setFolder_path(String folder_path) {
+        this.folder_path = folder_path;
     }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public ArrayList<Integer> getChannels() {
+    public Map<Integer, ArrayList<ClipBean>> getChannels() {
         return channels;
     }
 
-    public void setChannels(ArrayList<Integer> channels) {
+    public void setChannels(Map<Integer, ArrayList<ClipBean>> channels) {
         this.channels = channels;
     }
 }

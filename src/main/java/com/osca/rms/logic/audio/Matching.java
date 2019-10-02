@@ -2,18 +2,19 @@ package com.osca.rms.logic.audio;
 
 import com.osca.rms.bean.FrameBean;
 import com.osca.rms.util.DatabaseUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 public class Matching implements Runnable {
-    FrameBean frameBean;
-    Connection sqlConnection;
+    private FrameBean frameBean;
+    private Connection sqlConnection;
+
+    private static final Logger logger = LogManager.getLogger(Matching.class);
 
     public Matching(FrameBean frameBean, Connection sqlConnection) {
         this.frameBean = frameBean;
@@ -54,12 +55,12 @@ public class Matching implements Runnable {
                         }
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.error("File Error : " + e.toString());
                     } finally {
                         try {
                             convertFormat.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        } catch (Exception e) {
+                            logger.error("IO Error : " + e.toString());
                         }
                     }
                 }
@@ -90,7 +91,7 @@ public class Matching implements Runnable {
                         songHashList.add(sh);
                     }
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    logger.error("DB Error : " + e.toString());
                 } finally {
                     DatabaseUtil.close(stmt);
                     DatabaseUtil.close(rs);
@@ -138,15 +139,41 @@ public class Matching implements Runnable {
                 Statement stmtStat = null;
 
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("File Error : " + e.toString());
             }
 
-            if (bestSong > 0 && bestCount >= 18) {
-                boolean state = DatabaseUtil.execute("INSERT into frame_match values ('" + frameBean.getChannelId() + "','" + frameBean.getDateTime().toString() + "','" + bestSong + "','" + bestCount + "')", sqlConnection);
+            if (bestSong > 0) {
+                DatabaseUtil.execute("INSERT into frame_match values ('" + frameBean.getChannelId() + "','" + frameBean.getDateTime().toString() + "','" + bestSong + "','" + bestCount + "')", sqlConnection);
+                if (bestCount >= 18) {
+                    Timestamp endTime = new Timestamp(frameBean.getDateTime().getTime() + (40 * 1000));
+                    ResultSet resultSet = DatabaseUtil.executeQuery("SELECT id,song_id,match_id,gaps FROM channels WHERE id='" + frameBean.getChannelId() + "'", sqlConnection);
+                    if (resultSet.next()) {
+                        int song_id = resultSet.getInt(2);
+                        int match_id = resultSet.getInt(3);
+                        int gaps = resultSet.getInt(4);
+                        if (song_id == bestSong & gaps <= 2) {
+                            DatabaseUtil.execute("UPDATE channels SET gaps='0' where id='" + frameBean.getChannelId() + "'", sqlConnection);
+                            DatabaseUtil.execute("UPDATE matches SET end='" + endTime.toString() + "' where id='" + match_id + "'", sqlConnection);
+                        } else {
+                            int recordId = DatabaseUtil.executeInsert("INSERT INTO matches (start,end,channel_id,song_id) VALUES ('" + frameBean.getDateTime().toString() + "','" + endTime.toString() + "','" + frameBean.getChannelId() + "','" + bestSong + "')", sqlConnection);
+                            if (recordId > 0) {
+                                DatabaseUtil.execute("UPDATE channels SET song_id='" + bestSong + "',match_id='" + recordId + "',gaps='0' where id='" + frameBean.getChannelId() + "'", sqlConnection);
+                            } else {
+                                logger.error("Match Insertion Failed");
+                            }
+                        }
+                    } else {
+                        logger.error("Channel not Found");
+                    }
+                } else {
+                    DatabaseUtil.execute("UPDATE channels SET gaps = gaps + 1 where id='" + frameBean.getChannelId() + "'", sqlConnection);
+                }
+            } else {
+                DatabaseUtil.execute("UPDATE channels SET gaps = gaps + 1 where id='" + frameBean.getChannelId() + "'", sqlConnection);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("File Error : " + e.toString());
         }
 
     }

@@ -4,6 +4,8 @@ import com.osca.rms.bean.FrameBean;
 import com.osca.rms.logic.audio.Matching;
 import com.osca.rms.util.DatabaseUtil;
 import com.osca.rms.util.FileUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -21,6 +23,7 @@ public class MatchManager implements Runnable{
     File mediaFile;
     Timestamp dateTime;
     int channelId;
+    private static final Logger logger = LogManager.getLogger(MatchManager.class);
 
     public MatchManager(File mediaFile, Timestamp dateTime, int channelId){
         this.mediaFile = mediaFile;
@@ -60,9 +63,9 @@ public class MatchManager implements Runnable{
             }
 
         } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
+            logger.error("Unsupported Audio File : " + e.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("File Error : " + e.toString());
         }
     }
 }

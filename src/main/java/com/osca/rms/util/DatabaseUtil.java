@@ -55,10 +55,11 @@ public class DatabaseUtil {
         ResultSet rs = null;
         try {
             if (conn == null || conn.isClosed()) {
+                logger.error("Connection is null or closed");
                 return null;
             }
-        } catch (SQLException e1) {
-            e1.printStackTrace();
+        } catch (SQLException e) {
+            logger.error("Database Connection Failed : "+ e.toString());
             return null;
         }
         Statement stmt = null;
@@ -66,9 +67,35 @@ public class DatabaseUtil {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Database Connection Failed : "+ e.toString());
         }
         return rs;
+    }
+
+    public static int executeInsert(String query, Connection conn) {
+        ResultSet rs = null;
+        int generatedKey = -1;
+        try {
+            if (conn == null || conn.isClosed()) {
+                logger.error("Connection is null or closed");
+                return generatedKey;
+            }
+        } catch (SQLException e) {
+            logger.error("Database Connection Failed : "+ e.toString());
+            return generatedKey;
+        }
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+            stmt.execute();
+            rs = stmt.getGeneratedKeys();
+            if(rs.next()){
+                generatedKey = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            logger.error("Database Connection Failed : "+ e.toString());
+        }
+        return generatedKey;
     }
 
     public static void close(Connection connTest) {
