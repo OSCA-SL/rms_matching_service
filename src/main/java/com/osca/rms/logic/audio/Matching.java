@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.sound.sampled.AudioInputStream;
-import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
@@ -69,7 +68,7 @@ public class Matching implements Runnable {
 
 
                 try {
-                    StringBuilder squerStr = new StringBuilder("SELECT HV.* from fingerprint_hash_value HV where HV.hash_key in (");
+                    StringBuilder squerStr = new StringBuilder("SELECT HV.* from fingerprints HV where HV.hash_key in (");
                     for (Long hash : allHashMap.keySet()) {
                         squerStr.append(hash + ",");
 

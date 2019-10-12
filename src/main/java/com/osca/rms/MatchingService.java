@@ -3,6 +3,8 @@ package com.osca.rms;
 import com.google.gson.Gson;
 import com.osca.rms.bean.MatchingRequestBean;
 import com.osca.rms.util.MatchingUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MatchingService extends HttpServlet {
+
+    private final Logger logger = LogManager.getLogger(MatchingService.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -31,7 +35,8 @@ public class MatchingService extends HttpServlet {
         ExecutorService executorService = Executors.newFixedThreadPool(requestBean.getChannels().keySet().size());
         long stTime = System.currentTimeMillis();
         MatchChannels(executorService, requestBean);
-        System.out.println("Matching took " + (System.currentTimeMillis() - stTime) / 1000 + " S");
+
+        logger.info("Matching took " + (System.currentTimeMillis() - stTime) / 1000 + " S");
         executorService.shutdown();
     }
 
