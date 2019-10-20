@@ -44,7 +44,7 @@ public class RegisteringService extends HttpServlet {
             FormatConverter formatConverter = new FormatConverter();
             File wavFile = new File(wavFilePath);
             AudioInputStream songStream = formatConverter.convertFormat(wavFile);
-            Map<Long, List<Integer>> hashMap = new FeatureFinder().extractFeaturesNew(songStream, 0, FeatureFinder.FFT_WIN_SIZE, true);
+            Map<Long, List<Integer>> hashMap = new FeatureFinder().extractFeaturesNew(songStream, 0, FeatureFinder.FFT_SHIFT_WIN_SIZE, true);
 
             Connection connection = DatabaseUtil.getConnection();
             String query = "";

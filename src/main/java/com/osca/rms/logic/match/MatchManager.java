@@ -12,7 +12,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -37,24 +36,20 @@ public class MatchManager implements Runnable{
         try {
             AudioInputStream in = AudioSystem.getAudioInputStream(mediaFile);
             AudioFormat baseFormat = in.getFormat();
-            ByteArrayOutputStream bos;
             Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(dateTime.getTime());
             while (true) {
-                bos = new ByteArrayOutputStream();
+
                 byte[] buffer = new byte[(int) (baseFormat.getSampleRate() * FileUtil.FRAME_SIZE_IN_SECOND * baseFormat.getFrameSize())];
                 int noOfBytes = in.read(buffer);
                 if (noOfBytes == -1) {
                     break;
                 } else {
-                    bos.write(buffer, 0, noOfBytes);
-                    bos.flush();
-                    bos.close();
-                    byte dataArray[] = bos.toByteArray();
-                    float actualSampleLength = dataArray.length/(baseFormat.getSampleRate()*baseFormat.getFrameSize());
+
+                    float actualSampleLength = buffer.length/(baseFormat.getSampleRate()*baseFormat.getFrameSize());
                     if( actualSampleLength > 10 )
                     {
-                        AudioInputStream ais = new AudioInputStream(new ByteArrayInputStream(dataArray), baseFormat, (long) (baseFormat.getSampleRate() * actualSampleLength));
+                        AudioInputStream ais = new AudioInputStream(new ByteArrayInputStream(buffer), baseFormat, (long) (baseFormat.getSampleRate() * actualSampleLength));
                         FrameBean frameBean = new FrameBean(ais,new Timestamp(cal.getTime().getTime()),channelId);
                         new Matching(frameBean,sqlConnection).run();
                     }

@@ -142,7 +142,7 @@ public class Matching implements Runnable {
             }
 
             if (bestSong > 0) {
-                DatabaseUtil.execute("INSERT into frame_match values ('" + frameBean.getChannelId() + "','" + frameBean.getDateTime().toString() + "','" + bestSong + "','" + bestCount + "')", sqlConnection);
+                DatabaseUtil.execute("INSERT into frame_matches (channel_id,timestamp,song_id,score) values ('" + frameBean.getChannelId() + "','" + frameBean.getDateTime().toString() + "','" + bestSong + "','" + bestCount + "')", sqlConnection);
                 if (bestCount >= 18) {
                     Timestamp endTime = new Timestamp(frameBean.getDateTime().getTime() + (40 * 1000));
                     ResultSet resultSet = DatabaseUtil.executeQuery("SELECT id,song_id,match_id,gaps FROM channels WHERE id='" + frameBean.getChannelId() + "'", sqlConnection);
