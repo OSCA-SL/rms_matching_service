@@ -30,14 +30,15 @@ public class MatchingService extends HttpServlet {
         while ((line = bufferedReader.readLine()) != null) {
             request = request + line + "\n";
         }
-
+        logger.info("Matching started : "+request);
         MatchingRequestBean requestBean = new Gson().fromJson(request, MatchingRequestBean.class);
         ExecutorService executorService = Executors.newFixedThreadPool(requestBean.getChannels().keySet().size());
         long stTime = System.currentTimeMillis();
         MatchChannels(executorService, requestBean);
 
-        logger.info("Matching took " + (System.currentTimeMillis() - stTime) / 1000 + " S");
+
         executorService.shutdown();
+        logger.info("Matching took " + (System.currentTimeMillis() - stTime) / 1000 + " S");
     }
 
     private void MatchChannels(ExecutorService executorService, MatchingRequestBean requestBean) {
