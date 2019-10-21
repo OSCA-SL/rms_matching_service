@@ -38,6 +38,7 @@ public class MatchingService extends HttpServlet {
 
 
         executorService.shutdown();
+        while(!executorService.isTerminated()){}
         logger.info("Matching took " + (System.currentTimeMillis() - stTime) / 1000 + " S");
     }
 
