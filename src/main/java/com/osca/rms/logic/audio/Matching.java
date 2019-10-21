@@ -165,10 +165,10 @@ public class Matching implements Runnable {
                         logger.error("Channel not Found");
                     }
                 } else {
-                    DatabaseUtil.execute("UPDATE channels SET gaps = gaps + 1 where id='" + frameBean.getChannelId() + "'", sqlConnection);
+                    DatabaseUtil.execute("UPDATE channels SET gaps = gaps + 1 where id='" + frameBean.getChannelId() + "' and gaps < '100'", sqlConnection);
                 }
             } else {
-                DatabaseUtil.execute("UPDATE channels SET gaps = gaps + 1 where id='" + frameBean.getChannelId() + "'", sqlConnection);
+                DatabaseUtil.execute("UPDATE channels SET gaps = gaps + 1 where id='" + frameBean.getChannelId() + "' and gaps < '100'", sqlConnection);
             }
 
         } catch (Exception e) {

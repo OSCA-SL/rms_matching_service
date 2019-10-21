@@ -62,5 +62,6 @@ public class MatchManager implements Runnable{
         } catch (IOException e) {
             logger.error("File Error : " + e.toString());
         }
+        DatabaseUtil.close(sqlConnection);
     }
 }
