@@ -4,6 +4,7 @@ import com.osca.rms.bean.FrameBean;
 import com.osca.rms.logic.audio.Matching;
 import com.osca.rms.util.DatabaseUtil;
 import com.osca.rms.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -56,12 +57,13 @@ public class MatchManager implements Runnable{
                     cal.add(Calendar.SECOND, (int) actualSampleLength);
                 }
             }
-
+            FileUtils.forceDelete(mediaFile);
         } catch (UnsupportedAudioFileException e) {
             logger.error("Unsupported Audio File : " + e.toString());
         } catch (IOException e) {
             logger.error("File Error : " + e.toString());
         }
         DatabaseUtil.close(sqlConnection);
+
     }
 }
