@@ -13,8 +13,8 @@ public class DatabaseUtil {
         Connection conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "";
-            String USER = "";
+            String url = "jdbc:mysql://localhost:3306/songs";
+            String USER = "root";
             String PASS = "";
             conn = DriverManager.getConnection(url, USER, PASS);
             if (conn != null && !conn.isClosed()) {

@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import com.osca.rms.bean.MatchingRequestBean;
 import com.osca.rms.util.MatchingUtil;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MatchingService extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(MatchingService.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -26,6 +30,9 @@ public class MatchingService extends HttpServlet {
         while ((line = bufferedReader.readLine()) != null) {
             request = request + line + "\n";
         }
+        logger.error("=========================================" );
+        logger.error("Request : " + request);
+        logger.error("=========================================" );
 
         MatchingRequestBean requestBean = new Gson().fromJson(request, MatchingRequestBean.class);
         ExecutorService executorService = Executors.newFixedThreadPool(requestBean.getChannels().keySet().size());
