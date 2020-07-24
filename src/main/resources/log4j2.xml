@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Configuration status="INFO">
     <Properties>
-        <Property name="CATALINA_HOME">/tmp</Property>
+        <Property name="CATALINA_HOME">/opt/tomcat</Property>
     </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
@@ -9,14 +9,14 @@
         </Console>
         <RollingFile
                 name="rollingFile"
-                fileName="${CATALINA_HOME}/logs/rms.log"
-                filePattern="${CATALINA_HOME}/logs/rms.%i.log.gz"
+                fileName="${CATALINA_HOME}/logs/rms/rms.log"
+                filePattern="${CATALINA_HOME}/logs/rms/rms.%d{yyyy-MM-dd}.log.gz"
                 ignoreExceptions="false">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %l %m%n</Pattern>
             </PatternLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10MB" />
+                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
             </Policies>
             <DefaultRolloverStrategy max="5" />
         </RollingFile>
