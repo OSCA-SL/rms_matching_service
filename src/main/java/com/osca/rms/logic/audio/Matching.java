@@ -152,9 +152,9 @@ public class Matching implements Runnable {
                         int gaps = resultSet.getInt(4);
                         if (song_id == bestSong & gaps <= 2) {
                             DatabaseUtil.execute("UPDATE channels SET gaps='0' where id='" + frameBean.getChannelId() + "'", sqlConnection);
-                            DatabaseUtil.execute("UPDATE matches SET end='" + endTime.toString() + "' where id='" + match_id + "'", sqlConnection);
+                            DatabaseUtil.execute("UPDATE song_matches SET end='" + endTime.toString() + "' where id='" + match_id + "'", sqlConnection);
                         } else {
-                            int recordId = DatabaseUtil.executeInsert("INSERT INTO matches (start,end,channel_id,song_id) VALUES ('" + frameBean.getDateTime().toString() + "','" + endTime.toString() + "','" + frameBean.getChannelId() + "','" + bestSong + "')", sqlConnection);
+                            int recordId = DatabaseUtil.executeInsert("INSERT INTO song_matches (start,end,channel_id,song_id) VALUES ('" + frameBean.getDateTime().toString() + "','" + endTime.toString() + "','" + frameBean.getChannelId() + "','" + bestSong + "')", sqlConnection);
                             if (recordId > 0) {
                                 DatabaseUtil.execute("UPDATE channels SET song_id='" + bestSong + "',match_id='" + recordId + "',gaps='0' where id='" + frameBean.getChannelId() + "'", sqlConnection);
                             } else {
