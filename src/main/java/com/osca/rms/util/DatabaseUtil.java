@@ -13,9 +13,12 @@ public class DatabaseUtil {
         Connection conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/DB_NAME?sslMode=DISABLED"; //Unless SSL is configured set sslMode=DISABLED
-            String USER = "";
-            String PASS = "";
+            String dbHost = System.getenv("DB_HOST");
+            String dbPort = System.getenv("DB_PORT");
+            String dbDatabase = System.getenv("DB_DATABASE");
+            String USER = System.getenv("DB_USERNAME");
+            String PASS = System.getenv("DB_PASSWORD");
+            String url = "jdbc:mysql://"+dbHost+":"+dbPort+"/"+dbDatabase+"?sslMode=DISABLED";
             conn = DriverManager.getConnection(url, USER, PASS);
             if (conn != null && !conn.isClosed()) {
                 return conn;
